@@ -14,6 +14,8 @@ resource "azurerm_container_app" "ca" {
   container_app_environment_id = var.container_app_environment_id
   revision_mode                = var.settings.revision_mode
   tags                         = merge(local.tags, try(var.settings.tags, null))
+  workload_profile_name        = can(var.settings.workload_profile.key) ? try(var.combined_resources.container_app_environment[try(var.settings.workload_profile.lz_key, var.client_config.landingzone_key)][var.settings.workload_profile.key].workload_profile.name, null) : null
+
 
   template {
     dynamic "container" {

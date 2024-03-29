@@ -2,6 +2,14 @@ output "id" {
   value = azurerm_container_app_environment.cae.id
 }
 
+output "name" {
+  value = azurerm_container_app_environment.cae.name
+}
+
+output "workload_profile" {
+  value = try(var.settings.workload_profile, null) != null ? azurerm_container_app_environment.cae.workload_profile.name : null
+}
+
 output "default_domain" {
   value = azurerm_container_app_environment.cae.default_domain
 }
@@ -21,3 +29,5 @@ output "platform_reserved_dns_ip_address" {
 output "static_ip_address" {
   value = try(var.settings.internal_load_balancer_enabled, false) == true ? azurerm_container_app_environment.cae.static_ip_address : null
 }
+
+

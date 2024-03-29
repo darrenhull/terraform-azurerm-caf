@@ -18,4 +18,7 @@ variable "resource_group" {
 }
 variable "settings" {}
 variable "container_app_environment_id" {}
-variable "container_app_environment_name" {}
+variable "container_app_environment_workload_profile_name" {
+  description = "The name of the environment workload profile that this application will run on."
+  default = "Consumption"
+}

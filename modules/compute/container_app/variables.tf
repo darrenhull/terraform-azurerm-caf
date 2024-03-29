@@ -18,3 +18,4 @@ variable "resource_group" {
 }
 variable "settings" {}
 variable "container_app_environment_id" {}
+variable "container_app_environment_name" {}

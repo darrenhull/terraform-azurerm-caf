@@ -7,7 +7,7 @@ output "name" {
 }
 
 output "workload_profile" {
-  value = try(var.settings.workload_profile, null) != null ? azurerm_container_app_environment.cae.workload_profile.name : null
+  value = try(var.settings.workload_profile, null) != null ? azurerm_container_app_environment.cae.workload_profile : null
 }
 
 output "default_domain" {

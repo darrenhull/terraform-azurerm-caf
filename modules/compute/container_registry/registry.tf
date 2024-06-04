@@ -9,12 +9,13 @@ resource "azurecaf_name" "acr" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = azurecaf_name.acr.result
-  resource_group_name = local.resource_group_name
-  location            = local.location
-  sku                 = var.sku
-  admin_enabled       = var.admin_enabled
-  tags                = local.tags
+  name                      = azurecaf_name.acr.result
+  resource_group_name       = local.resource_group_name
+  location                  = local.location
+  sku                       = var.sku
+  admin_enabled             = var.admin_enabled
+  tags                      = local.tags
+  quarantine_policy_enabled = var.quarantine_policy_enabled
 
   public_network_access_enabled = var.public_network_access_enabled
 
@@ -51,5 +52,13 @@ resource "azurerm_container_registry" "acr" {
       tags     = try(georeplications.value.tags)
     }
   }
+
+   dynamic "trust_policy" {
+    for_each = can(var.trust_policy) ? [var.trust_policy] : []
+
+    content {
+      enabled = try(trust_policy.value.enabled,false)
+    }
+   }
 }
 

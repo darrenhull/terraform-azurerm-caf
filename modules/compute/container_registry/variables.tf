@@ -32,6 +32,15 @@ variable "georeplications" {
   default     = {}
 }
 
+variable "trust_policy" {
+  description = "(Optional) determins if the container repository should use signed images."
+  default     = {}
+}
+
+variable "quarantine_policy_enabled" {
+  description = "(Optional) determins if the quarantine policy is enabled."
+  default     = {}
+}
 variable "vnets" {
   default = {}
 }

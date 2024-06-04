@@ -54,7 +54,7 @@ resource "azurerm_container_registry" "acr" {
   }
 
    dynamic "trust_policy" {
-    for_each = can(var.trust_policy) ? [var.trust_policy] : []
+    for_each = try(var.trust_policy, {})
 
     content {
       enabled = try(trust_policy.value.enabled,false)

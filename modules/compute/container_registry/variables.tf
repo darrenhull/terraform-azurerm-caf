@@ -39,7 +39,7 @@ variable "trust_policy" {
 
 variable "quarantine_policy_enabled" {
   description = "(Optional) determins if the quarantine policy is enabled."
-  default     = {}
+  default     = false
 }
 variable "vnets" {
   default = {}

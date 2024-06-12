@@ -13,8 +13,7 @@ variable "remote_objects" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-  default     = {}
+  type        = bool
 }
 variable "location" {
   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."

@@ -32,7 +32,7 @@ module "eventgrid_topic" {
   location = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
 
   remote_objects = {
-    resource_group = local.combined_objects_resource_groups
+    resource_groups = local.combined_objects_resource_groups
     vnets          = local.combined_objects_networking
     private_dns    = local.combined_objects_private_dns
   }

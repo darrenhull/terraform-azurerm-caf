@@ -15,5 +15,5 @@ locals {
     try(var.base_tags, null),
     try(var.tags, null)
   ) : try(var.tags, null)
-
+ 
 }

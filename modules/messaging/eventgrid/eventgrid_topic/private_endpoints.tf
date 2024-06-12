@@ -5,8 +5,8 @@ module "private_endpoint" {
 
   resource_id         = azurerm_eventgrid_topic.egt.id
   name                = each.value.name
-  location            = var.remote_objects.resource_groups[each.value.resource_group_key].location
-  resource_group_name = var.remote_objects.resource_groups[each.value.resource_group_key].name
+  location            = var.location
+  resource_group_name = can(var.settings.resource_group.name) ? var.settings.resource_group.name : var.remote_objects.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name
   subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.remote_objects.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
   settings            = each.value
   global_settings     = var.global_settings

@@ -6,7 +6,7 @@ module "private_endpoint" {
   source   = "../../../networking/private_endpoint"
   for_each = var.private_endpoints
 
-  resource_id         = azurerm_eventgrid_domain.egd.id
+  resource_id         = azurerm_eventgrid_topic.egt.id
   name                = each.value.name
   location            = var.remote_objects.resource_groups[each.value.resource_group_key].location
   resource_group_name = var.remote_objects.resource_groups[each.value.resource_group_key].name

@@ -1,6 +1,3 @@
-#
-# Private endpoint
-#
 
 module "private_endpoint" {
   source   = "../../../networking/private_endpoint"

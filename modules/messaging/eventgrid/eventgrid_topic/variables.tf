@@ -15,6 +15,11 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
+variable "tags" {
+  type        = map(any)
+  description = "(Optional) A mapping of tags to assign to the resource."
+  default     = {}
+}
 variable "location" {
   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = null

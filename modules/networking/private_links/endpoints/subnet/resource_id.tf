@@ -2,7 +2,7 @@ module "redis_caches" {
   source = "../private_endpoint"
   for_each = {
     for key, value in try(var.private_endpoints.resource_id, {}) : key => value
-    if can(value.resource_id)
+    if can(value.resource_id) 
   }
   base_tags           = var.base_tags
   client_config       = var.client_config
@@ -14,5 +14,5 @@ module "redis_caches" {
   resource_id         = each.value.resource_id
   settings            = each.value
   subnet_id           = var.subnet_id
-  subresource_names   = ["redisCache"]
+  subresource_names   =  each.value.private_service_connection.subresource_names
 }

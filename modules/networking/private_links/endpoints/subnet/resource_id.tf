@@ -1,4 +1,4 @@
-module "redis_caches" {
+module "resource_id" {
   source = "../private_endpoint"
   for_each = {
     for key, value in try(var.private_endpoints.resource_id, {}) : key => value

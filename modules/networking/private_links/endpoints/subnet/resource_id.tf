@@ -1,7 +1,7 @@
 module "resource_id" {
   source = "../private_endpoint"
   for_each = {
-    for key, value in try(var.private_endpoints.resource_id, {}) : key => value
+    for key, value in try(var.private_endpoints.resource_ids, {}) : key => value
     if can(value.resource_id) 
   }
   base_tags           = var.base_tags

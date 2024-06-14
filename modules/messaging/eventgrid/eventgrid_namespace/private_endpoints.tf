@@ -2,7 +2,7 @@ module "private_endpoint" {
   source   = "../../../networking/private_endpoint"
   for_each = var.private_endpoints
 
-  resource_id         = azurerm_eventgrid_topic.egn.id
+  resource_id         = azapi_resource.egn.id
   name                = each.value.name
   location            = var.location
   resource_group_name = can(var.settings.resource_group.name) ? var.settings.resource_group.name : var.remote_objects.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name

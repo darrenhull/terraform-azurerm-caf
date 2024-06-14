@@ -12,7 +12,7 @@ resource_groups = {
   }
 }
 
-eventgrid_namespace = {
+eventgrid_namespaces = {
   egn1 = {
     name = "egn1"
     resource_group = {
@@ -30,5 +30,28 @@ eventgrid_namespace = {
      identity = {
       type = "UserAssigned" 
      }
+  }
+}
+
+
+eventgrid_namespace_topics = {
+  egnt1 = {
+    name = "egnt1"
+    eventgrid_namespace = {
+      key = "egn1"
+    }
+    event_retention_days = 7
+  }
+}
+
+
+
+eventgrid_namespace_topic_subscriptions = {
+  egnts1 = {
+    name = "egnts1"
+    eventgrid_namespace_topic  = {
+      key = "egnt1"
+    }
+    event_time_to_live = 7
   }
 }

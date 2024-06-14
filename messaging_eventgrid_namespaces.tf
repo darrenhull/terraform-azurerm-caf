@@ -26,7 +26,6 @@ module "eventgrid_namespace_topics" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  base_tags       = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
   remote_objects = {
     eventgrid_namespaces  = local.combined_objects_eventgrid_namespaces
@@ -45,8 +44,7 @@ module "eventgrid_namespace_topic_subscriptions" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  base_tags       = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
-
+  
   remote_objects = {
     eventgrid_namespace_topics  = local.combined_objects_eventgrid_namespace_topics
     vnets                       = local.combined_objects_networking

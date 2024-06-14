@@ -29,9 +29,9 @@ module "eventgrid_namespace_topics" {
   base_tags       = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
   remote_objects = {
-    resource_groups = local.combined_objects_resource_groups
-    vnets          = local.combined_objects_networking
-    private_dns    = local.combined_objects_private_dns
+    eventgrid_namespaces  = local.combined_objects_eventgrid_namespaces
+    vnets                 = local.combined_objects_networking
+    private_dns           = local.combined_objects_private_dns
   }
 }
 output "eventgrid_namespace_topics" {
@@ -48,9 +48,9 @@ module "eventgrid_namespace_topic_subscriptions" {
   base_tags       = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
   remote_objects = {
-    resource_groups = local.combined_objects_resource_groups
-    vnets          = local.combined_objects_networking
-    private_dns    = local.combined_objects_private_dns
+    eventgrid_namespace_topics  = local.combined_objects_eventgrid_namespace_topics
+    vnets                       = local.combined_objects_networking
+    private_dns                 = local.combined_objects_private_dns
   }
 }
 output "eventgrid_namespace_topic_subscriptions" {

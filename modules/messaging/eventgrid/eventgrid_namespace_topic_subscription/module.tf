@@ -10,7 +10,7 @@
         queue = {
           eventTimeToLive              = var.settings.event_time_to_live
           maxDeliveryCount             = var.settings.max_delivery_count
-          receiveLockDurationInSeconds = var.settings.lock_duration_seconds
+          receiveLockDurationInSeconds = var.settings.receive_lock_duration_in_seconds
         }
       }
       eventDeliverySchema = "CloudEventSchemaV1_0"

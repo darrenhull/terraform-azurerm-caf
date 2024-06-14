@@ -22,6 +22,7 @@ output "eventgrid_namespaces" {
 module "eventgrid_namespace_topics" {
   source   = "./modules/messaging/eventgrid/eventgrid_namespace_topic"
   for_each = local.messaging.eventgrid_namespace_topics
+  depends_on = [module.eventgrid_namespaces]
 
   global_settings = local.global_settings
   client_config   = local.client_config
@@ -40,6 +41,7 @@ output "eventgrid_namespace_topics" {
 module "eventgrid_namespace_topic_subscriptions" {
   source   = "./modules/messaging/eventgrid/eventgrid_namespace_topic_subscription"
   for_each = local.messaging.eventgrid_namespace_topic_subscriptions
+  depends_on = [module.eventgrid_namespace_topics]
 
   global_settings = local.global_settings
   client_config   = local.client_config

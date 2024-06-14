@@ -52,6 +52,8 @@ eventgrid_namespace_topic_subscriptions = {
     eventgrid_namespace_topic  = {
       key = "egnt1"
     }
-    event_time_to_live = 7
+    eventTimeToLive              = "P7D"
+    maxDeliveryCount             = 2
+    receiveLockDurationInSeconds =  60
   }
 }

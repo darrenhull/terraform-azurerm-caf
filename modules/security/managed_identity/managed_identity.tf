@@ -19,7 +19,7 @@ resource "azurerm_user_assigned_identity" "msi" {
 resource "azurerm_federated_identity_credential" "fic" {
   depends_on = [azurerm_user_assigned_identity.msi]
   for_each = {
-    for key, value in try(local.compute.azurerm_federated_identity_credentials, {}) : key => value
+    for key, value in try(var.settings.azurerm_federated_identity_credentials, {}) : key => value
   }
   
   name                = each.value.name 

@@ -16,6 +16,18 @@ resource "azurerm_user_assigned_identity" "msi" {
 
 }
 
+resource "azurerm_federated_identity_credential" "fic" {
+  depends_on = [azurerm_user_assigned_identity.msi]
+  for_each = try(var.settings.fazurerm_federated_identity_credentials, null) != null ? [var.settings.fazurerm_federated_identity_credentials] : []
+  
+  name                = each.value.name 
+  resource_group_name = var.resource_group_name
+  audience            = [each.value.audience]
+  issuer              = "https://foo"
+  parent_id           = azurerm_user_assigned_identity.msi.id
+  subject             = each.value.subject
+}
+
 resource "time_sleep" "propagate_to_azuread" {
   depends_on = [azurerm_user_assigned_identity.msi]
 

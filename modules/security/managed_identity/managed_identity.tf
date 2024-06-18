@@ -18,7 +18,7 @@ resource "azurerm_user_assigned_identity" "msi" {
 
 resource "azurerm_federated_identity_credential" "fic" {
   depends_on = [azurerm_user_assigned_identity.msi]
-  for_each = try(var.settings.azurerm_federated_identity_credentials, null) != null ? [var.settings.fazurerm_federated_identity_credentials] : []
+  for_each = try(var.settings.azurerm_federated_identity_credentials, null) != null ? [var.settings.azurerm_federated_identity_credentials] : []
   
   name                = each.value.name 
   resource_group_name = var.resource_group_name

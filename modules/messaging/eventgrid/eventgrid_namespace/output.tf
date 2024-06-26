@@ -8,6 +8,6 @@ output "identity" {
 }
 
 output "endpoint" {
-  value       = jsondecode(azapi_resource.egn.output).properties.endpoint
+  value       = azapi_resource.egn.output.properties.endpoint
   description = "The endpoint of the Event Grid Namespace."
 }

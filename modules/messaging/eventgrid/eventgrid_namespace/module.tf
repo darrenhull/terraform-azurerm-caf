@@ -27,4 +27,6 @@ resource "azapi_resource" "egn" {
       name     = var.settings.sku_name
     }
   })
+
+  response_export_values = ["properties.endpoint"]
 }

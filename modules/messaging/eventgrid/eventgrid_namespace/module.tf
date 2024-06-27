@@ -28,5 +28,5 @@ resource "azapi_resource" "egn" {
     }
   })
 
-  response_export_values = ["properties.endpoint"]
+  response_export_values = ["properties.topicsConfiguration.hostname"]
 }

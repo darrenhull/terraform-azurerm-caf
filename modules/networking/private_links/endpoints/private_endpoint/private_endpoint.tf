@@ -41,6 +41,16 @@ resource "azurerm_private_endpoint" "pep" {
       )
     }
   }
+  dynamic "ip_configuration" {
+    for_each = can(var.settings.ip_configuration) ? [var.settings.ip_configuration] : []
+    content {
+      name                          = ip_configuration.value.name
+      private_ip_address            = ip_configuration.value.private_ip_address
+      subresource_name              = each.key
+      member_name                   = ip_configuration.value.member_name
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       resource_group_name, location

@@ -42,7 +42,7 @@ resource "azurerm_private_endpoint" "pep" {
     }
   }
   dynamic "ip_configuration" {
-    for_each = can(var.settings.ip_configuration) ? [var.settings.ip_configuration] : []
+    for_each = { for key, value in try(local.compute.ip_configuration, {}) : key => value }
     content {
       name                          = ip_configuration.value.name
       private_ip_address            = ip_configuration.value.private_ip_address

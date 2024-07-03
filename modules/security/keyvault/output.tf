@@ -19,7 +19,7 @@ output "base_tags" {
   value = local.tags
 }
 
-output "merged_secret_ids" {
+output "secret_ids" {
   description = "The IDs of all secrets"
   value = merge(
     { for s in azurerm_key_vault_secret.secret : s.name => s.id },

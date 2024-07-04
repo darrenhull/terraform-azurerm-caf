@@ -257,7 +257,7 @@ resource "azurerm_container_app" "ca" {
     content {
       name  = each.value.name
       value = try(each.value.value, null)
-      key_vault_secret_id = try(data.azurerm_key_vault_secret.secret[each.key].id, null)
+      key_vault_secret_id = try(data.azurerm_key_vault_secret.secret[each.key].versionless_id, null)
     }
   }
 

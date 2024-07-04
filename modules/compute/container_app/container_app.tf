@@ -251,13 +251,12 @@ resource "azurerm_container_app" "ca" {
   }
 
   dynamic "secret" {
-  for_each = {
-    for key, value in try(var.settings.secret, {}) : key => value
-    }
+    for_each = try(var.settings.secret, {})
+
     content {
-      name  = each.value.name
-      value = try(each.value.value, null)
-      key_vault_secret_id = try(data.azurerm_key_vault_secret.secret[each.key].resource_versionless_id, null)
+      name  = secret.value.name
+      value = try(secret.value.value, null)
+      key_vault_secret_id = try(data.azurerm_key_vault_secret.secret[secret.name].resource_versionless_id, null)
     }
   }
 

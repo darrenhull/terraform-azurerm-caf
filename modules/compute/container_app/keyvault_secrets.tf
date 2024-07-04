@@ -1,9 +1,7 @@
 
 data "azurerm_key_vault_secret" "secret" {
-  for_each = {
-    for key, value in try(var.settings.secret, {}) : key => value
-    if try(value.keyvault, null) != null
-  }
+  for_each = { for s in try(var.settings.secret, {}) : s.name => s if try(s.keyvault, null) != null }
+
   name     = each.value.keyvault.secret_name
   key_vault_id = try(
     each.value.keyvault.id,

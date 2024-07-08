@@ -257,7 +257,7 @@ resource "azurerm_container_app" "ca" {
       name  = secret.value.name
       value = try(secret.value.value, null)
       key_vault_secret_id = try(data.azurerm_key_vault_secret.secret[secret.value.name].versionless_id, null)
-      identity = var.combined_resources.managed_identities[try(secret.value.identity.lz_key, var.client_config.landingzone_key)][secret.value.identity.key].id
+      identity = var.combined_resources.managed_identities[try(secret.value.keyvault.identity.lz_key, var.client_config.landingzone_key)][secret.value.keyvault.identity.key].id
       #identity = can(secret.value.identity.key) ? var.combined_resources.managed_identities[try(secret.value.identity.lz_key, var.client_config.landingzone_key)][secret.value.identity.key].id : "System"
     }
   }

@@ -9,7 +9,7 @@ resource "azurecaf_name" "ca" {
 }
 
 resource "azurerm_container_app" "ca" {
-  name                                = azurecaf_name.ca.result
+  name                                = azurecaf_name.ca.result == "ca" ? "${azurecaf_name.ca.result}-${var.settings.name}" :  azurecaf_name.ca.result
   resource_group_name                 = local.resource_group_name
   container_app_environment_id        = var.container_app_environment_id
   workload_profile_name               = var.workload_profile_name

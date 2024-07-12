@@ -9,7 +9,7 @@ resource "azurecaf_name" "apim" {
 }
 
 data "http" "apispec" {
-  for_each = can(regex("-link", var.settings.import.content_format)) ? { "spec" = var.settings.import } : {}
+  for_each = local.import_from_url ? { "spec" = var.settings.import } : {}
 
   url = each.value.content_value
 
@@ -34,7 +34,7 @@ resource "azurerm_api_management_api" "apim" {
     content {
 
       content_format = try(replace(try(import.value.content_format,""), "-link", "") , null)
-      content_value  = can(regex("-link", try(import.value.content_format, ""))) ? try(data.http.apispec[import.value.content_format].body, null) : try(file(import.value.content_value),null)
+      content_value  = local.import_from_url ? data.http.apispec[import.value.content_format].body : try(file(import.value.content_value),null)
       dynamic "wsdl_selector" {
         for_each = try(var.settings.wsdl_selector, null) != null ? [var.settings.wsdl_selector] : []
 

@@ -8,6 +8,16 @@ resource "azurecaf_name" "apim" {
   use_slug      = var.global_settings.use_slug
 }
 
+data "http" "apispec" {
+  for_each = { for s in try(var.settings.import, {}) : s.content_format => s if contains(s.content_format,"-link") }
+
+  url = each.value.content_value
+
+  request_headers = {
+    Accept = "application/json"
+  }
+}
+
 resource "azurerm_api_management_api" "apim" {
   name = azurecaf_name.apim.result
 
@@ -23,8 +33,8 @@ resource "azurerm_api_management_api" "apim" {
 
     content {
 
-      content_format = try(import.value.content_format, null)
-      content_value  = contains(try(import.value.content_format, ""),"-link")?try(import.value.content_value, null) : try(file(import.value.content_value),null)
+      content_format = try(replace(try(import.value.content_format,""), "-link", "") , null)
+      content_value  = contains(try(import.value.content_format, ""),"-link")?try(data.http.apispec[import.value.content_format].body, null) : try(file(import.value.content_value),null)
       dynamic "wsdl_selector" {
         for_each = try(var.settings.wsdl_selector, null) != null ? [var.settings.wsdl_selector] : []
 

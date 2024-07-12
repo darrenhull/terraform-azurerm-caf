@@ -9,7 +9,7 @@ resource "azurecaf_name" "apim" {
 }
 
 data "http" "apispec" {
-   for_each = contains(try(var.settings.import.content_format,""), "-link") ? { "spec" = var.settings.import } : {}
+  for_each = can(regex("-link", var.settings.import.content_format)) ? { "spec" = var.settings.import } : {}
 
   url = each.value.content_value
 

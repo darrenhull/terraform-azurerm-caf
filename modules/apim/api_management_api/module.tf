@@ -24,7 +24,7 @@ resource "azurerm_api_management_api" "apim" {
     content {
 
       content_format = try(import.value.content_format, null)
-      content_value  = try(import.value.content_value, null)
+      content_value  = contains(try(import.value.content_format, ""),"-link")?try(import.value.content_value, null) : try(file(import.value.content_value),null)
       dynamic "wsdl_selector" {
         for_each = try(var.settings.wsdl_selector, null) != null ? [var.settings.wsdl_selector] : []
 

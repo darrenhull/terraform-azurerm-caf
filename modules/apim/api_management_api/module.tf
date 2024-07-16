@@ -34,7 +34,7 @@ resource "azurerm_api_management_api" "apim" {
     content {
 
       content_format = try(replace(try(import.value.content_format,""), "-link", "") , null)
-      content_value  = local.import_from_url ? data.http.apispec["spec"].response_body : try(var.settings.import.content_value,null)
+      content_value  = local.import_from_url ? data.http.apispec["spec"].response_body : try(import.value.content_value,null)
       dynamic "wsdl_selector" {
         for_each = try(var.settings.wsdl_selector, null) != null ? [var.settings.wsdl_selector] : []
 

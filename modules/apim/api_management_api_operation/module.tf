@@ -204,8 +204,8 @@ resource "azurerm_api_management_api_operation" "apim" {
 
   lifecycle {
     precondition {
-      condition     = contains(["GET", "DELETE", "PUT", "POST"], var.settings.method)
-      error_message = format("Enter a valid value for method: GET, DELETE, PUT, POST. Got: %s", var.settings.method)
+      condition     = contains(["GET", "DELETE", "PUT", "POST","OPTIONS","HEAD"], var.settings.method)
+      error_message = format("Enter a valid value for method: GET, DELETE, PUT, POST, OPTIONS, HEAD. Got: %s", var.settings.method)
     }
   }
 

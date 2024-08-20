@@ -9,12 +9,13 @@ resource "azurecaf_name" "ca" {
 }
 
 resource "azurerm_container_app" "ca" {
-  name                         = azurecaf_name.ca.result
-  resource_group_name          = local.resource_group_name
-  container_app_environment_id = var.container_app_environment_id
-  revision_mode                = var.settings.revision_mode
-  tags                         = merge(local.tags, try(var.settings.tags, null))
-
+  name                                = azurecaf_name.ca.result == "ca" ? "${azurecaf_name.ca.result}-${var.settings.name}" :  azurecaf_name.ca.result
+  resource_group_name                 = local.resource_group_name
+  container_app_environment_id        = var.container_app_environment_id
+  workload_profile_name               = var.workload_profile_name
+  revision_mode                       = var.settings.revision_mode
+  tags                                = merge(local.tags, try(var.settings.tags, null))
+  
   template {
     dynamic "container" {
       for_each = var.settings.template.container
@@ -230,9 +231,9 @@ resource "azurerm_container_app" "ca" {
         for_each = try(ingress.value.traffic_weight, {})
 
         content {
-          label           = traffic_weight.value.label
+          label           = var.settings.revision_mode == "Single" ? try(traffic_weight.value.label, null) : traffic_weight.value.label
           latest_revision = traffic_weight.value.latest_revision
-          revision_suffix = traffic_weight.value.revision_suffix
+          revision_suffix = var.settings.revision_mode == "Single" ? try(traffic_weight.value.revision_suffix, null) : traffic_weight.value.revision_suffix
           percentage      = traffic_weight.value.percentage
         }
       }
@@ -254,7 +255,9 @@ resource "azurerm_container_app" "ca" {
 
     content {
       name  = secret.value.name
-      value = secret.value.value
+      value = try(secret.value.value, null)
+      key_vault_secret_id = try(data.azurerm_key_vault_secret.secret[secret.value.name].versionless_id, null)
+      identity = can(secret.value.identity.key) ? var.combined_resources.managed_identities[try(secret.value.identity.lz_key, var.client_config.landingzone_key)][secret.value.identity.key].id : "System"
     }
   }
 
